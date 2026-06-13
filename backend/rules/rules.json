@@ -1,0 +1,30 @@
+[
+  {
+    "id": "after_hours",
+    "logic": "OR",
+    "conditions": [
+      { "field": "hour", "operator": "<", "value": 6 },
+      { "field": "hour", "operator": ">", "value": 22 }
+    ],
+    "risk": 20,
+    "message": "Access outside normal working hours"
+  },
+  {
+    "id": "high_volume",
+    "logic": "AND",
+    "conditions": [
+      { "field": "volume", "operator": ">", "value": 10000 }
+    ],
+    "risk": 30,
+    "message": "Unusually high data access volume"
+  },
+  {
+    "id": "sensitive_data",
+    "logic": "AND",
+    "conditions": [
+      { "field": "sensitivity", "operator": "==", "value": "high" }
+    ],
+    "risk": 40,
+    "message": "Access to highly sensitive data"
+  }
+]
