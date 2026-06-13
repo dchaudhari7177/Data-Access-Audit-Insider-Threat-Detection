@@ -1,11 +1,12 @@
 def calculate_risk(alerts):
     total = sum(a["risk"] for a in alerts)
 
-    if total >= 80:
+    # 🔥 stricter thresholds
+    if total >= 90:
         level = "CRITICAL"
-    elif total >= 60:
+    elif total >= 70:
         level = "HIGH"
-    elif total >= 30:
+    elif total >= 40:
         level = "MEDIUM"
     else:
         level = "LOW"

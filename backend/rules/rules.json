@@ -1,6 +1,6 @@
 [
   {
-    "id": "after_hours",
+    "id": "after_hours_access",
     "logic": "OR",
     "conditions": [
       { "field": "hour", "operator": "<", "value": 6 },
@@ -9,22 +9,107 @@
     "risk": 20,
     "message": "Access outside normal working hours"
   },
+
   {
-    "id": "high_volume",
+    "id": "bulk_export",
     "logic": "AND",
     "conditions": [
-      { "field": "volume", "operator": ">", "value": 10000 }
+      { "field": "query_type", "operator": "==", "value": "EXPORT" },
+      { "field": "rowcount", "operator": ">", "value": 10000 }
+    ],
+    "risk": 40,
+    "message": "Bulk data export detected"
+  },
+
+  {
+    "id": "high_volume_access",
+    "logic": "AND",
+    "conditions": [
+      { "field": "rowcount", "operator": ">", "value": 20000 }
     ],
     "risk": 30,
     "message": "Unusually high data access volume"
   },
+
   {
-    "id": "sensitive_data",
+    "id": "sensitive_data_access",
     "logic": "AND",
     "conditions": [
-      { "field": "sensitivity", "operator": "==", "value": "high" }
+      { "field": "data_sensitivity", "operator": "in", "value": ["high", "restricted"] }
     ],
-    "risk": 40,
-    "message": "Access to highly sensitive data"
+    "risk": 30,
+    "message": "Access to sensitive or restricted data"
+  },
+
+  {
+    "id": "data_exfiltration",
+    "logic": "AND",
+    "conditions": [
+      { "field": "destination", "operator": "in", "value": ["usb_drive", "external_email", "external_ip"] },
+      { "field": "rowcount", "operator": ">", "value": 10000 }
+    ],
+    "risk": 50,
+    "message": "Potential data exfiltration detected"
+  },
+
+  {
+    "id": "external_transfer",
+    "logic": "AND",
+    "conditions": [
+      { "field": "destination", "operator": "in", "value": ["external_email", "external_ip"] }
+    ],
+    "risk": 25,
+    "message": "Data transferred to external destination"
+  },
+
+  {
+    "id": "usb_usage",
+    "logic": "AND",
+    "conditions": [
+      { "field": "destination", "operator": "==", "value": "usb_drive" }
+    ],
+    "risk": 25,
+    "message": "Data copied to USB device"
+  },
+
+  {
+    "id": "restricted_access_by_low_tier",
+    "logic": "AND",
+    "conditions": [
+      { "field": "access_tier", "operator": "in", "value": ["intern", "junior", "contractor"] },
+      { "field": "data_sensitivity", "operator": "in", "value": ["high", "restricted"] }
+    ],
+    "risk": 45,
+    "message": "Low privilege user accessing sensitive data"
+  },
+
+  {
+    "id": "cross_department_access",
+    "logic": "AND",
+    "conditions": [
+      { "field": "department", "operator": "!=", "value": "expected_department" }
+    ],
+    "risk": 20,
+    "message": "Cross-department data access detected"
+  },
+
+  {
+    "id": "suspicious_query_type",
+    "logic": "AND",
+    "conditions": [
+      { "field": "query_type", "operator": "in", "value": ["DELETE", "UPDATE"] }
+    ],
+    "risk": 15,
+    "message": "Potentially destructive query detected"
+  },
+
+  {
+    "id": "failed_access_attempt",
+    "logic": "AND",
+    "conditions": [
+      { "field": "status", "operator": "==", "value": "failure" }
+    ],
+    "risk": 10,
+    "message": "Failed access attempt detected"
   }
 ]
