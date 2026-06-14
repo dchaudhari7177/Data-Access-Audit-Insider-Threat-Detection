@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 from utils.loader import load_data
 from services.risk_engine import calculate_risk
 from services.context_engine import adjust_risk
@@ -173,6 +173,25 @@ def metrics():
         "f1_score": round(f1, 3),
         "note": "Simulated metrics (no labeled dataset provided)"
     })
+
+@app.route("/dashboard")
+def dashboard():
+    alerts = analyze().json
+
+    total = len(logs)
+    anomalies = len(alerts)
+
+    summary_data = {
+        "total_events": total,
+        "anomalies_detected": anomalies,
+        "anomaly_percentage": round((anomalies / total) * 100, 2)
+    }
+
+    return render_template(
+        "dashboard.html",
+        alerts=alerts[:50],  # limit for UI
+        summary=summary_data
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)

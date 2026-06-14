@@ -1,0 +1,35 @@
+<!-- templates/dashboard.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SentinelScope Dashboard</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        .card { border: 1px solid #ccc; padding: 10px; margin: 10px; }
+        .HIGH { border-left: 5px solid orange; }
+        .CRITICAL { border-left: 5px solid red; }
+    </style>
+</head>
+<body>
+
+<h1>🔐 SentinelScope Dashboard</h1>
+
+<h2>📊 Summary</h2>
+<p>Total Events: {{ summary.total_events }}</p>
+<p>Anomalies: {{ summary.anomalies_detected }}</p>
+<p>Percentage: {{ summary.anomaly_percentage }}%</p>
+
+<h2>🚨 Alerts</h2>
+
+{% for alert in alerts %}
+<div class="card {{ alert.severity }}">
+    <p><b>User:</b> {{ alert.user_id }}</p>
+    <p><b>Severity:</b> {{ alert.severity }}</p>
+    <p><b>Risk Score:</b> {{ alert.risk_score }}</p>
+    <p><b>Issues:</b> {{ alert.anomalies_detected }}</p>
+    <p><b>Action:</b> {{ alert.recommendation }}</p>
+</div>
+{% endfor %}
+
+</body>
+</html>
