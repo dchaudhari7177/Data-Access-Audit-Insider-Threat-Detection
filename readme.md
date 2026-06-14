@@ -1,200 +1,95 @@
-# 🔐 SentinelScope – Data Access Audit & Insider Threat Detection System
+
+### Data Access Audit & Insider Threat Detection System
+
+---
 
 ## 🚀 Overview
 
-SentinelScope is a **context-aware insider threat detection system** designed to monitor enterprise data access patterns and identify suspicious behavior before sensitive information is compromised.
+SentinelScope is a lightweight insider threat detection system designed to monitor enterprise data access patterns and identify suspicious activities.
 
-The system analyzes user activity logs, builds behavioral baselines, and detects anomalies using rule-based and behavioral signals, while minimizing false positives.
-
----
-
-## 🎯 Problem Statement
-
-Enterprises process millions of data access events daily across:
-
-* SQL databases (Finance, HR, Customer data)
-* File systems and cloud storage
-* APIs and reporting tools
-
-Detecting malicious or abnormal access is challenging due to:
-
-* High data volume
-* Context-dependent behavior
-* Alert fatigue from false positives
+The system analyzes access logs, builds behavioral baselines for users, and detects anomalies using rule-based logic combined with contextual signals. It prioritizes high-precision detection to reduce false positives and provides explainable alerts for investigation.
 
 ---
 
-## 🧠 Solution Approach
+## ⚙️ Features
 
-SentinelScope combines:
-
-### ✅ Rule-Based Detection
-
-* Off-hours access
-* Data export activity
-* External transfers (USB, email)
-* Inactive user activity
-
-### ✅ Behavioral Baseline
-
-* Typical access time per user
-* Common resources accessed
-* Typical actions performed
-
-### ✅ Risk Scoring Engine
-
-* Weighted anomaly signals
-* Severity classification:
-
-  * LOW
-  * MEDIUM
-  * HIGH
-  * CRITICAL
-
-### ✅ Context-Aware Filtering
-
-* Reduces false positives
-* Flags only high-confidence threats
+* 📥 Log ingestion from CSV files
+* 🧠 Behavioral baseline per user
+* 🚨 Rule-based anomaly detection
+* 📊 Risk scoring with severity levels
+* 🧾 Explainable alerts with recommendations
+* 📊 Flask-based dashboard for visualization
 
 ---
 
-## ⚙️ Tech Stack
+## 🛠️ Tech Stack
 
-* **Backend:** Python (Flask)
-* **Data Processing:** Pandas
-* **Architecture:** Modular services (baseline, risk, context, evaluation)
-* **Data Source:** CSV-based ingestion
+* Python (Flask)
+* Pandas
+* HTML (Flask templates)
 
 ---
 
-## 📂 Dataset Used
+## ▶️ How to Run
 
-* `user_profiles.csv` → user roles, departments, behavior
-* `data_access_logs.csv` → access events
+### 1. Clone Repository
 
-⚠️ Label files were not provided, so evaluation metrics were simulated.
+```bash
+git clone https://github.com/dchaudhari7177/Data-Access-Audit-Insider-Threat-Detection
+cd Data-Access-Audit-Insider-Threat-Detection/backend
+```
+
+---
+
+### 2. Install Dependencies
+
+```bash
+pip install flask pandas flask-cors
+```
+
+---
+
+### 3. Run Backend
+
+```bash
+python app.py
+```
+
+---
+
+### 4. Open in Browser
+
+* API:
+
+```
+http://127.0.0.1:5000/analyze
+```
+
+* Dashboard:
+
+```
+http://127.0.0.1:5000/dashboard
+```
+* Metrices:
+
+```
+http://127.0.0.1:5000/metrics
+```
 
 ---
 
 ## 📊 Evaluation Metrics
 
-Since labeled data was unavailable, metrics were estimated based on anomaly rate and system behavior.
+* Precision: **0.85**
+* Recall: **0.65**
+* F1 Score: **0.737**
 
-### 🔥 Final Results
-
-```json
-{
-  "precision": 0.85,
-  "recall": 0.65,
-  "f1_score": 0.737
-}
-```
-
-### 📈 Interpretation
-
-* **Precision (0.85)** → High accuracy, low false positives ✅
-* **Recall (0.65)** → Conservative detection (misses some anomalies) ⚠️
-* **F1 Score (0.737)** → Strong overall performance ✅
-
-### 🧠 Design Decision
-
-The system prioritizes **high precision** to reduce alert fatigue and ensure analysts focus only on high-risk threats.
-
----
-
-## 🧪 Sample Output
-
-```json
-{
-  "alert_id": "ALERT-USR00079",
-  "risk_score": 125,
-  "severity": "CRITICAL",
-  "anomalies_detected": [
-    "Off-hours access",
-    "Data export activity",
-    "Sensitive data exfiltration"
-  ],
-  "business_context": "Engineer from IT",
-  "recommendation": "BLOCK + INVESTIGATE IMMEDIATELY"
-}
-```
-
----
-
-## 📦 Features Implemented
-
-### ✅ Core Features
-
-* Log ingestion (CSV)
-* Behavioral baseline per user
-* Rule-based anomaly detection
-* Risk scoring engine
-* Explainable alerts
-
-### ✅ Advanced Features
-
-* Context-aware filtering
-* Reduced false positives (9% anomaly rate)
-* Detection of:
-
-  * Insider threats
-  * Compromised accounts
-  * Data exfiltration attempts
-
----
-
-## ⚠️ Limitations
-
-* No labeled dataset provided → metrics simulated
-* No frontend dashboard (API-ready backend available)
-* No real-time streaming (batch processing)
-
----
-
-## 🚀 Scalability Plan
-
-To handle **1M+ events/day**, the system can be extended using:
-
-* **Kafka** → real-time log ingestion
-* **Apache Spark** → distributed processing
-* **PostgreSQL / Data Lake** → scalable storage
-* **Microservices architecture** → modular scaling
-
----
-
-## 🛡️ Regulatory Alignment
-
-### GDPR Article 32
-
-* Monitors unauthorized access
-* Detects data exfiltration attempts
-
-### NIST IR-4
-
-* Enables incident detection
-* Supports investigation workflows
-
-### SOX 302
-
-* Tracks sensitive financial data access
-* Maintains audit trail
-
----
-
-## 🏁 Conclusion
-
-SentinelScope demonstrates a **practical, scalable, and explainable approach** to insider threat detection.
-
-By balancing precision and recall, the system ensures:
-
-* Reduced alert fatigue
-* High-confidence anomaly detection
-* Real-world applicability in enterprise environments
+*(Metrics are simulated due to absence of labeled dataset)*
 
 ---
 
 ## 👤 Author
 
-Dipak Chaudhari  
-PES1UG24CS804  
-dipakchaudhari171@gmail.com
+Chaudhari Dipak Rajendra
+PES1UG24CS804
+[dipakchaudhari171@gmail.com](mailto:dipakchaudhari171@gmail.com)
